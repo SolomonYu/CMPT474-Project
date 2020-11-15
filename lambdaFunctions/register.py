@@ -13,13 +13,13 @@ table = dynamodb.Table(USER_DATABASE_NAME)
 
 def lambda_handler(event, context):
     # get values from api input
-    username = event['username']
+    UserId = event['UserId']
     email = event['email']
     password = event['password']
     
     response = table.put_item(
         Item={
-            'username': username,
+            'UserId': UserId,
             'email' : email,
             'password' : password
         })
