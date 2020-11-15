@@ -18,7 +18,7 @@ def lambda_handler(event, context):
     
     response = table.get_item(
         Key={
-            'username': username
+            'UserId': username
         })
     item = response['Item']
     
