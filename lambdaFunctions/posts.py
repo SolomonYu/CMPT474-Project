@@ -12,14 +12,14 @@ BUY_DATABASE_NAME = 'ItemsToBuy'
 dynamodb = boto3.resource('dynamodb')
 # use the DynamoDB object to select our table
 lendtable = dynamodb.Table(LEND_DATABASE_NAME)
-buytable = dynamodb.Table(LEND_DATABASE_NAME)
+buytable = dynamodb.Table(BUY_DATABASE_NAME)
 
 def lambda_handler(event, context):
     
     lenditems = lendtable.scan()
     buyitems = buytable.scan()
 
-    items = [lenditems['Items'],buyitems['Items']]
+    items = [lenditems['Items'], buyitems['Items']]
     
     
     return{
