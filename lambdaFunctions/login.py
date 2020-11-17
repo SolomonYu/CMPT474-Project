@@ -1,3 +1,4 @@
+
 import json
 # AWS SDK
 import boto3
@@ -20,17 +21,22 @@ def lambda_handler(event, context):
         Key={
             'UserId': UserId
         })
-    item = response['Item']
-    
-    if item['password'] == password:
-        return {
-            # returns the entire user object for now
-            # can be changed later to not pass the password
-            'statusCode': 200,
-            'body': json.dumps(item)
-        }
-    else:
+    if 'Item' not in response:
         return{
             'statusCode': 400,
-            'body': json.dumps('Invalid login')
+            'body': json.dumps('User not found')
         }
+    else:
+        item = response['Item']
+        if item['password'] == password:
+            return {
+                # returns the entire user object for now
+                # can be changed later to not pass the password
+                'statusCode': 200,
+                'body': json.dumps(item)
+            }
+        else:
+            return{
+                'statusCode': 400,
+                'body': json.dumps('Invalid login')
+            }
