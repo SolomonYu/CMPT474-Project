@@ -3,6 +3,7 @@ import json
 import boto3
 from boto3.dynamodb.conditions import Key
 import uuid
+import time
 
 # name of the database we are using
 # needs to be edited to YOUR database name
@@ -13,15 +14,15 @@ USER_DATABASE_NAME = 'Users'
 # create a DynamoDB object using the AWS SDK
 dynamodb = boto3.resource('dynamodb')
 
-def create_post(event, context):
+def lambda_handler(event, context):
 
     # get values from api input
-    title = event['title']
+    # title = event['title']
     description = event['description']
     userId = event['UserId']
-    location_city = event['location_city']
-    location_province = event['location_province']
-    date_posted = event['date_posted']
+    # location_city = event['location_city']
+    # location_province = event['location_province']
+    # date_posted = event['date_posted']
     lend = event['lend']
     buy = event['buy']    
     # monetary = event['monetary'] 
@@ -29,8 +30,11 @@ def create_post(event, context):
 
     # retrieve information via user profile
     email = dynamodb.Table(USER_DATABASE_NAME).get_item(
-        Key = {'UserId': userId} 
-        )
+        Key = {'UserId': userId},
+        ProjectionExpression = 'email'
+        )['Item']['email']
+    
+    date_posted = time.ctime() 
 
     # use the DynamoDB object to select our table
     if lend:
@@ -38,13 +42,13 @@ def create_post(event, context):
         response = table.put_item(
             Item = {
                 # 'LendItemId': "L" + str(uuid.uuid4()),
-                'LendItemId': uuid.uuid4(),
-                'title': title,
+                'ItemId': str(uuid.uuid4().hex),
+                # 'title': title,
                 'description': description,
                 'userId': userId,
                 'email': email,
-                'location_city': location_city,
-                'location_province': location_province,
+                # 'location_city': location_city,
+                # 'location_province': location_province,
                 'date_posted': date_posted,
                 # 'monetary': monetary,
                 'available': True
@@ -57,14 +61,14 @@ def create_post(event, context):
         response = table.put_item(
             Item = {
                 # 'BuyItemId': "B" + str(uuid.uuid4()), easier to differentiate b/t buy/ lend w/o having to pass in two booleans
-                'BuyItemId': uuid.uuid4(),
-                'title': title,
+                'ItemId': str(uuid.uuid4().hex),
+                # 'title': title,
                 'description': description,
                 'userId': userId,
                 'email': email,
                 'price': price,
-                'location_city': location_city,
-                'location_province': location_province,
+                # 'location_city': location_city,
+                # 'location_province': location_province,
                 'date_posted': date_posted,
                 # 'monetary': monetary,
                 'available': True
