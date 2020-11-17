@@ -16,15 +16,24 @@ def lambda_handler(event, context):
     UserId = event['UserId']
     email = event['email']
     password = event['password']
-    
-    response = table.put_item(
-        Item={
-            'UserId': UserId,
-            'email' : email,
-            'password' : password
+    response = table.get_item(
+        Key={
+            'UserId': UserId
         })
-    
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Successful registration')
-    }
+    if 'Item' in response:
+        return{
+            'statusCode': 400,
+            'body': json.dumps('User already exists')
+        }
+    else:
+        response = table.put_item(
+            Item={
+                'UserId': UserId,
+                'email' : email,
+                'password' : password
+            })
+        
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Successful registration')
+        }
