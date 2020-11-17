@@ -28,6 +28,8 @@ def lambda_handler(event, context):
     # monetary = event['monetary'] 
     #     # boolean to decide whether for sell or borrow 
 
+    itemId = str(uuid.uuid4().hex)
+    
     # retrieve information via user profile
     email = dynamodb.Table(USER_DATABASE_NAME).get_item(
         Key = {'UserId': userId},
@@ -42,7 +44,7 @@ def lambda_handler(event, context):
         response = table.put_item(
             Item = {
                 # 'LendItemId': "L" + str(uuid.uuid4()),
-                'ItemId': str(uuid.uuid4().hex),
+                'ItemId': itemId,
                 # 'title': title,
                 'description': description,
                 'userId': userId,
@@ -61,7 +63,7 @@ def lambda_handler(event, context):
         response = table.put_item(
             Item = {
                 # 'BuyItemId': "B" + str(uuid.uuid4()), easier to differentiate b/t buy/ lend w/o having to pass in two booleans
-                'ItemId': str(uuid.uuid4().hex),
+                'ItemId': itemId,
                 # 'title': title,
                 'description': description,
                 'userId': userId,
@@ -75,11 +77,13 @@ def lambda_handler(event, context):
                     # if items are assumed to be always available when first posted,
                     # available is True by default
             })
+    
+    return itemId
 
-    responseObj = {}
-    responseObj['statusCode'] = 200
-    responseObj['headers'] = {}
-    responseObj['headers']['Content-type'] = 'application/json'
-    responseObj['body'] = json.dumps(response)
+    # responseObj = {}
+    # responseObj['statusCode'] = 200
+    # responseObj['headers'] = {}
+    # responseObj['headers']['Content-type'] = 'application/json'
+    # responseObj['body'] = json.dumps(response)
 
-    return responseObj
+    # return responseObj
