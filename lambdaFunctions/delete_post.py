@@ -1,5 +1,6 @@
 from decimal import Decimal
 from pprint import pprint
+import json
 import boto3
 from botocore.exceptions import ClientError
 
@@ -11,9 +12,9 @@ BUY_DATABASE_NAME = 'ItemsToBuy'
 # create a DynamoDB object using the AWS SDK
 dynamodb = boto3.resource('dynamodb')
 
-def delete_post(event, context):
+def lambda_handler(event, context):
 
-    postId = event['postID']
+    itemId = event['itemId']
     lend = event['lend']
     buy = event['buy']
     # use the DynamoDB object to select our table
@@ -24,7 +25,7 @@ def delete_post(event, context):
 
     response = table.delete_item(
         Key={
-            'postID': postId
+            'ItemId': itemId
         })
 
     responseObj = {}
