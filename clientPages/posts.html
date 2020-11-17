@@ -2,37 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>CMPT474 First Iteration</title>
-    <!-- Add some CSS to change client UI -->
-    <script>
-        // define the callAPI function that takes a first name and last name as parameters
-        var getAllPosts = ()=> {
-            // instantiate a headers object
-            var myHeaders = new Headers();
-            // add content type header to object
-            myHeaders.append("Content-Type", "application/json");
-            // create a JSON object with parameters for API call and store in a variable
-            var requestOptions = {
-                method: 'GET',
-                headers: myHeaders,
-                redirect: 'follow'
-            };
-            // make API call with parameters and use promises to get response
-            fetch("YOUR GET POST API URL", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                alert(JSON.parse(result).body)
-                })
-            .catch(error => alert(error));
-        }
-    </script>
+    <title>Borrowball | Posts</title>
+    <script type="text/javascript" src="constants.js"></script>
+    <script type="text/javascript" src="posts.js"></script>
     <title>Login Form</title>    
-    <!-- <link rel="stylesheet" type="text/css" href="css/style.css">    -->
+    <link rel="stylesheet" type="text/css" href="style.css">   
 </head>
 <body>
-    <h2>Available Posts</h2><br>    
+    <button>Create Post (not available yet)</button>
+    <h2>Available Posts</h2><br>
     <div class="Posts">    
         <script>getAllPosts();</script>
+        <div id="postList">
+            <h3>Items offered to lend</h3>
+            <ul id="lendList">
+            </ul>
+            <br>
+            <h3>Items offered for sale</h3>
+            <ul id="buyList">
+            </ul>
+        </div>
     </div>
 </body>
 </html>
