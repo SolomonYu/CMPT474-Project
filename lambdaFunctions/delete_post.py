@@ -1,3 +1,4 @@
+
 from decimal import Decimal
 from pprint import pprint
 import json
@@ -14,10 +15,18 @@ dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
 
-    itemId = event['itemId']
+    itemId = event['ItemId']
     lend = event['lend']
     buy = event['buy']
     # use the DynamoDB object to select our table
+    if not lend and not buy:
+        responseObj = {}
+        responseObj['statusCode'] = 400
+        responseObj['headers'] = {}
+        responseObj['headers']['Content-type'] = 'application/json'
+        responseObj['body'] = json.dumps("Unable to find Post")
+        return responseObj
+    
     if lend:
         table = dynamodb.Table(LEND_DATABASE_NAME)
     elif buy:
@@ -27,11 +36,11 @@ def lambda_handler(event, context):
         Key={
             'ItemId': itemId
         })
-
+    
     responseObj = {}
     responseObj['statusCode'] = 200
     responseObj['headers'] = {}
     responseObj['headers']['Content-type'] = 'application/json'
-    responseObj['body'] = json.dumps(response)
+    responseObj['body'] = json.dumps("Deleted Successfully")
 
     return responseObj

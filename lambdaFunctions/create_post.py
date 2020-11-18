@@ -17,14 +17,14 @@ dynamodb = boto3.resource('dynamodb')
 def lambda_handler(event, context):
 
     # get values from api input
-    # title = event['title']
+    title = event['title']
     description = event['description']
     userId = event['UserId']
-    # location_city = event['location_city']
-    # location_province = event['location_province']
-    # date_posted = event['date_posted']
+    location_city = event['location_city']
+    location_province = event['location_province']
+    date_posted = event['date_posted']
     lend = event['lend']
-    buy = event['buy']    
+    buy = event['buy']   
     # monetary = event['monetary'] 
     #     # boolean to decide whether for sell or borrow 
 
@@ -43,47 +43,58 @@ def lambda_handler(event, context):
         table = dynamodb.Table(LEND_DATABASE_NAME)
         response = table.put_item(
             Item = {
-                # 'LendItemId': "L" + str(uuid.uuid4()),
                 'ItemId': itemId,
-                # 'title': title,
+                'title': title,
                 'description': description,
                 'userId': userId,
                 'email': email,
-                # 'location_city': location_city,
-                # 'location_province': location_province,
+                'location_city': location_city,
+                'location_province': location_province,
                 'date_posted': date_posted,
                 # 'monetary': monetary,
                 'available': True
                     # if items are assumed to be always available when first posted,
                     # available is True by default
             })
+        
+        return{
+            'statusCode': 200,
+            'body': json.dumps('Post Added Successfully')
+        }    
     elif buy:
         table = dynamodb.Table(BUY_DATABASE_NAME)
         price = event['price']
         response = table.put_item(
             Item = {
-                # 'BuyItemId': "B" + str(uuid.uuid4()), easier to differentiate b/t buy/ lend w/o having to pass in two booleans
                 'ItemId': itemId,
-                # 'title': title,
+                'title': title,
                 'description': description,
                 'userId': userId,
                 'email': email,
                 'price': price,
-                # 'location_city': location_city,
-                # 'location_province': location_province,
+                'location_city': location_city,
+                'location_province': location_province,
                 'date_posted': date_posted,
                 # 'monetary': monetary,
                 'available': True
                     # if items are assumed to be always available when first posted,
                     # available is True by default
             })
+        
+        return{
+            'statusCode': 200,
+            'body': json.dumps('Post Added Successfully')
+        }
+    else :
+        return{
+            'statusCode': 400,
+            'body': json.dumps('Unable to add Post')
+        }
+        
+        # responseObj = {}
+        # responseObj['statusCode'] = 200
+        # responseObj['headers'] = {}
+        # responseObj['headers']['Content-type'] = 'application/json'
+        # responseObj['body'] = json.dumps(response)
     
-    return itemId
-
-    # responseObj = {}
-    # responseObj['statusCode'] = 200
-    # responseObj['headers'] = {}
-    # responseObj['headers']['Content-type'] = 'application/json'
-    # responseObj['body'] = json.dumps(response)
-
-    # return responseObj
+        # return responseObj

@@ -4,25 +4,34 @@
     <meta charset="UTF-8">
     <title>Borrowball | Posts</title>
     <script type="text/javascript" src="constants.js"></script>
-    <script type="text/javascript" src="login.js"></script>
-    <title>Login Form</title>    
+    <script type="text/javascript" src="register.js"></script>
+    <title>Register Form</title>    
     <link rel="stylesheet" type="text/css" href="style.css">   
 </head>
 <body>
-    <h2>Login Page</h2><br>    
+    <h2>Register Page</h2><br>    
     <div class="login">    
     <form>    
         <label><b>User ID     
         </b>    
         </label>    
-        <input type="text" name="UID" id="UID" placeholder="UserId">    
+        <input type="text" name="UID" id="UID" placeholder="UserId"> 
+        <br><br>  
+        
+        <label><b>Email     
+        </b>    
+        </label>    
+        <input type="text" name="email" id="email" placeholder="email"> 
+
         <br><br>    
         <label><b>Password     
         </b>    
         </label>    
         <input type="Password" name="Pass" id="password" placeholder="Password">    
         <br><br>    
-        <button type="button" onclick="callAPI(document.getElementById('UID').value,document.getElementById('password').value)"> 
+        <button type="button" onclick="callAPI(document.getElementById('UID').value,
+                                                document.getElementById('email').value,
+                                                document.getElementById('password').value)"> 
             Log In
         </button>  
         <br><br>       
