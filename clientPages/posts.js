@@ -84,6 +84,11 @@ var getAllPosts = ()=> {
             emailLabel.innerHTML = "Email: ";
             var email = document.createElement("label");
             email.innerHTML = postTable[1][i].email;
+
+            var priceLabel = document.createElement("label");
+            priceLabel.innerHTML = "Price: ";
+            var price = document.createElement("label");
+            price.innerHTML = postTable[1][i].price;
            
             // lendList.appendChild(listItem) 
             buyList.appendChild(titleLabel)
@@ -91,6 +96,9 @@ var getAllPosts = ()=> {
             buyList.appendChild(document.createElement("br"))
             buyList.appendChild(descriptionLabel)
             buyList.appendChild(description)
+            buyList.appendChild(document.createElement("br"))
+            buyList.appendChild(priceLabel)
+            buyList.appendChild(price)
             buyList.appendChild(document.createElement("br"))
             buyList.appendChild(emailLabel)
             buyList.appendChild(email)
