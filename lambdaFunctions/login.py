@@ -16,6 +16,18 @@ def lambda_handler(event, context):
     UserId = event['UserId']
     password = event['password']
     
+    if len(UserId) == 0:
+        return{
+            'statusCode': 400,
+            'body': json.dumps('UserId is required to login.')
+        }
+    
+    if len(password) == 0:
+        return{
+            'statusCode': 400,
+            'body': json.dumps('password is required to login.')
+        }
+    
     response = table.get_item(
         Key={
             'UserId': UserId
