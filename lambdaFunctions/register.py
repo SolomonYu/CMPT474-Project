@@ -1,6 +1,7 @@
 import json
 # AWS SDK
 import boto3
+from hashlib import sha256
 
 # name of the database we are using
 # needs to be edited to YOUR database name
@@ -26,11 +27,13 @@ def lambda_handler(event, context):
             'body': json.dumps('User already exists')
         }
     else:
+        hashedpw = password.encode('utf-8')
+        hashedpw = sha256(hashedpw).hexdigest()
         response = table.put_item(
             Item={
                 'UserId': UserId,
                 'email' : email,
-                'password' : password
+                'password' : hashedpw
             })
         
         return {

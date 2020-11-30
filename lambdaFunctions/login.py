@@ -1,6 +1,7 @@
 import json
 # AWS SDK
 import boto3
+from hashlib import sha256
 
 # name of the database we are using
 # needs to be edited to YOUR database name
@@ -39,10 +40,13 @@ def lambda_handler(event, context):
         }
     else:
         item = response['Item']
-        if item['password'] == password:
+        # hash the password before comparing
+        hashedpw = password.encode('utf-8')
+        hashedpw = sha256(hashedpw).hexdigest()
+        if item['password'] == hashedpw:
+            item.pop('password',None)
             return {
-                # returns the entire user object for now
-                # can be changed later to not pass the password
+                # returns the entire user object except for pw
                 'statusCode': 200,
                 'body': json.dumps(item)
             }
