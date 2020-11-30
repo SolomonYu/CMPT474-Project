@@ -4,10 +4,13 @@ var getAllPosts = ()=> {
     var myHeaders = new Headers();
     // add content type header to object
     myHeaders.append("Content-Type", "application/json");
+    // using built in JSON utility package turn object to string and store in a variable
+    var raw = JSON.stringify({"key": 'cmpt474'});
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
         method: 'GET',
         headers: myHeaders,
+        body: raw,
         redirect: 'follow'
     };
     const USERID = localStorage.getItem("UserId");

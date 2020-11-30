@@ -15,14 +15,22 @@ lendtable = dynamodb.Table(LEND_DATABASE_NAME)
 buytable = dynamodb.Table(BUY_DATABASE_NAME)
 
 def lambda_handler(event, context):
-    
-    lenditems = lendtable.scan()
-    buyitems = buytable.scan()
+    # check if the key is correct
+    key = event['key']
+    if key == 'cmpt474':
+        lenditems = lendtable.scan()
+        buyitems = buytable.scan()
 
-    items = [lenditems['Items'], buyitems['Items']]
-    
-    
-    return{
-        'statusCode': 200,
-        'body': json.dumps(items)
-    }
+        items = [lenditems['Items'], buyitems['Items']]
+
+        
+        return{
+            'statusCode': 200,
+            'body': json.dumps(items)
+        }
+    else:
+        # print(attempted unauthorized access)
+        return{
+            'statusCode': 401,
+            'body': 'Unauthorized'
+        }
