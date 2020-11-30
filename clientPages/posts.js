@@ -249,3 +249,8 @@ var addNewPost = (title,description,location_city,location_province,date_posted,
     .catch(error => alert(error));
 
 }
+
+function logout(){
+    localStorage.removeItem("UserId")
+    window.location.href = "/login"
+}
