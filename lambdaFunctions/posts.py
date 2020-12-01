@@ -16,6 +16,11 @@ buytable = dynamodb.Table(BUY_DATABASE_NAME)
 
 def lambda_handler(event, context):
     # check if the key is correct
+    if 'key' not in event:
+        return{
+            'statusCode': 401,
+            'body': 'Unauthorized'
+        }
     key = event['key']
     if key == 'cmpt474':
         lenditems = lendtable.scan()
