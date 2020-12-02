@@ -10,23 +10,24 @@
 </head>
 <body>
     <h2>Login Page</h2><br>    
-    <div class="login">    
-    <form>    
-        <label><b>User ID     
-        </b>    
-        </label>    
-        <input type="text" name="UID" id="UID" placeholder="UserId">    
-        <br><br>    
-        <label><b>Password     
-        </b>    
-        </label>    
-        <input type="Password" name="Pass" id="password" placeholder="Password">    
-        <br><br>    
-        <button type="button" onclick="callAPI(document.getElementById('UID').value,document.getElementById('password').value)"> 
-            Log In
-        </button>  
-        <br><br>       
-    </form>     
+    <div class="login">  
+        <label id="loginStatus"></label>
+        <form>    
+            <label><b>User ID     
+            </b>    
+            </label>    
+            <input type="text" name="UID" id="UID" placeholder="UserId">    
+            <br><br>    
+            <label><b>Password     
+            </b>    
+            </label>    
+            <input type="Password" name="Pass" id="password" placeholder="Password">    
+            <br><br>    
+            <button type="button" onclick="callAPI(document.getElementById('UID').value,document.getElementById('password').value)"> 
+                Log In
+            </button>  
+            <br><br>       
+        </form>     
 </div>
 </body>
 </html>

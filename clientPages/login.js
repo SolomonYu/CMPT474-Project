@@ -15,11 +15,18 @@ var callAPI = (userId,password)=> {
     };
     // make API call with parameters and use promises to get response
     fetch(YOUR_API_INVOKE_URL + "/login", requestOptions)
-    .then(response => response.text())
-    .then(result => {
-        alert("Logged In Successfully")
-        localStorage.setItem("UserId", userId)
-        window.location.href = "/posts"
+    .then(response => {
+        console.log(response.status)
+        if (response.status == 200){
+            document.getElementById('loginStatus').innerHTML = "Login Successful. Moving to Posts Screen."
+            alert("Login Successful. Moving to Posts Screen.")
+            localStorage.setItem("UserId", userId)
+            window.location.href = "/posts"
+        }
+        else{
+            document.getElementById('loginStatus').innerHTML = "Login Failed."
+        }
+        
     })
     .catch(error => alert(error));
 }
