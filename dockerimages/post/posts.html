@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Borrowball | Posts</title>
+    <script type="text/javascript" src="constants.js"></script>
+    <script type="text/javascript" src="posts.js"></script>
+    <title>Login Form</title>    
+    <link rel="stylesheet" type="text/css" href="style.css">   
+</head>
+<body>
+    <button id = "createPostButton">Create Post</button>
+    <div id = "myModal" class = "modal">
+        <div class = "modal-content">
+            <span class = "close">&times;</span>
+            <div style = "text-align: center">
+                <form>
+                    <h2>Add A New Post</h2>
+                        <label for="title">Title:</label><br>
+                        <input type="text" id="title" name="title" value = ""><br>
+                        <br>
+                        <label for="description">Description:</label><br>
+                        <input type="text" id="description" name="description" value = ""><br>
+                        
+                        <br>
+                        <label for="location_city">Location City</label><br>
+                        <input type="text" id="location_city" name="location_city" value = ""><br>
+                        <br>
+                        <label for="location_province">Location Province</label><br>
+                        <input type="text" id="location_province" name="location_province" value = ""><br>
+                        <br>
+                        <label for="date_posted">Date Posted</label><br>
+                        <input type="text" id="date_posted" name="date_posted" value = ""><br>
+                        <br>
+                        <label for="price">Price</label><br>
+                        <input type="text" id="price" name="price" value = ""><br>
+                        <br>
+                    
+                        <input type="radio" id="buy"
+                            name="buyOrLend" value="buy" checked = "checked">
+                        <label for="buy">Buy</label>
+                        <input type="radio" id="lend"
+                            name="buyOrLend" value="lend">
+                        <label for="lend">Lend</label>
+                        <br><br>
+                        <button type = "button" id = "submitButton" onclick = "addNewPost(document.getElementById('title').value,
+                                                        document.getElementById('description').value,
+                                                        document.getElementById('location_city').value,
+                                                        document.getElementById('location_province').value,
+                                                        document.getElementById('date_posted').value,
+                                                        document.getElementById('price').value)">
+                            Submit
+                        </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>openModal();</script>
+    
+
+    <h2>Available Posts</h2><br>
+    <div class="Posts">    
+        <script>getAllPosts();</script>
+        <div id="postList">
+            <h3>Items Offered To Lend</h3>
+            <ul id="lendList">
+            </ul>
+            <h3>Items Wanted To Buy</h3>
+            <ul id="buyList">
+            </ul>
+        </div>
+    </div>
+    <button onclick="logout()">Logout</button>
+</body>
+</html>
